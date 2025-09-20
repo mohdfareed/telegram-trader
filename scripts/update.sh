@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Trade Poster Bot - Update Script
+# TelegramTrader Bot - Update Script
 # Script to update development dependencies
 
 # shellcheck source=/dev/null

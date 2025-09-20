@@ -27,8 +27,8 @@ See `.env.example` for all available configuration options.
 Then clone the repository and deploy the bot:
 
 ```sh
-git clone https://github.com/mohdfareed/trade-poster.git
-cd trade-poster
+git clone https://github.com/mohdfareed/telegram-trader.git
+cd telegram-trader
 ./scripts/deploy.sh
 ```
 

@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  trade-poster:
+  telegram-trader:
     image: ghcr.io/mohdfareed/telegram-trader:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: trade-poster-bot
+    container_name: telegram-trader-bot
 
     restart: unless-stopped
     env_file:

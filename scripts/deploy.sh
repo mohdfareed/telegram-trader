@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e  # exit on any error
 
-# Trade Poster Bot - Deploy bot container
+# TelegramTrader Bot - Deploy bot container
 # This script builds the image and either deploys it locally
 # or pushes to GitHub Container Registry for production
 

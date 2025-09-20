@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e  # exit on any error
 
-# Trade Poster Bot - Development Environment Setup Script
+# TelegramTrader Bot - Development Environment Setup Script
 # This script sets up a complete development environment for the project
 
 PYTHON_VERSION="3.13"
