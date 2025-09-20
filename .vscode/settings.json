@@ -1,0 +1,35 @@
+{
+    // shell
+    "shellcheck.customArgs": [
+        "--shell=bash" // REVIEW: find zsh equivalent tool
+    ],
+    "shellcheck.exclude": [
+        "1071" // allow zsh
+    ],
+    // python
+    "debugpy.debugJustMyCode": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        },
+    },
+    "black-formatter.args": [
+        "--line-length",
+        "79"
+    ],
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    // spelling
+    "cSpell.ignorePaths": [
+        ".git",
+        ".github",
+        ".venv",
+        ".vscode",
+        ".gitignore",
+    ],
+    "cSpell.words": [],
+}
