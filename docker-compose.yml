@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  trade-poster:
+    image: ghcr.io/mohdfareed/telegram-trader:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trade-poster-bot
+
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+
+    # Uncomment to use webhook mode
+    # ports:
+    #   - "${WEBHOOK_PORT:-8443}:8443"
+
+    # TODO: Implement a healthcheck
+    # healthcheck:
+    #   test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 10s
