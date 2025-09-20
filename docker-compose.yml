@@ -1,21 +1,19 @@
-version: '3.8'
-
 services:
   telegram-trader:
+    container_name: telegram-trader-bot
+    restart: unless-stopped
+
     image: ghcr.io/mohdfareed/telegram-trader:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: telegram-trader-bot
 
-    restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - ./data:/app/data
-
-    # ports:
-    #   - "${WEBHOOK_PORT:-8443}:8443"
+      - ./data:/bot/data
+    ports:
+      - "${WEBHOOK_PORT:-8443}:8443"
 
     # TODO: Implement a healthcheck
     # healthcheck:
