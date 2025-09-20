@@ -24,7 +24,6 @@ def setup_logging(debug: bool, log_file: Path) -> None:
 
     for module in WARN_MODULES:  # Reduce log level for non-debug modules
         logging.getLogger(module).setLevel(logging.WARNING)
-    root_logger.debug("debug mode enabled.")
 
 
 def _console_handler(debug: bool) -> logging.Handler:

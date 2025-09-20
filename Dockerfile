@@ -16,7 +16,9 @@ RUN uv pip install --upgrade pip
 
 # Configure data volume
 VOLUME ["/bot/data"]
+
 # Configure webhook port
+ENV WEBHOOK_PORT=8443
 EXPOSE 8443
 
 # TODO: Healthcheck

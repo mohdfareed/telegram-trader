@@ -26,15 +26,22 @@ def main(
     ] = False,
 ) -> None:
     """Main entry point for the bot package."""
-    app_settings = models.Settings()
-    utils.setup_logging(debug_mode, app_settings.data_path / "bot.log")
+    settings = models.Settings()
+    utils.setup_logging(debug_mode, settings.data_path / "bot.log")
+
+    logger.debug("debug mode enabled.")
+    logger.debug(f"data path: {settings.data_path}")
 
 
 @app.command()
 def start() -> None:
     """Start the Telegram bot."""
+    settings = models.Settings()
+    settings = settings  # TODO: remove when bot is implemented
+
     try:
         logger.info("running bot...")
+        # TODO: implement and start bot
         asyncio.run(asyncio.Event().wait())
     except KeyboardInterrupt:
         print()
