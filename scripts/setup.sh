@@ -1,8 +1,6 @@
 #!/bin/bash
+# Development Environment Setup Script
 set -e  # exit on any error
-
-# TelegramTrader Bot - Development Environment Setup Script
-# This script sets up a complete development environment for the project
 
 PYTHON_VERSION="3.13"
 

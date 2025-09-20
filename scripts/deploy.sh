@@ -1,9 +1,6 @@
 #!/bin/sh
+# Deploy bot container
 set -e  # exit on any error
-
-# TelegramTrader Bot - Deploy bot container
-# This script builds the image and either deploys it locally
-# or pushes to GitHub Container Registry for production
 
 IMAGE_URL="ghcr.io/mohdfareed/telegram-trader"
 tag="$(uv version --short)"

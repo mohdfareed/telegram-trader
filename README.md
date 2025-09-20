@@ -24,12 +24,16 @@ WEBHOOK_URL=https://yourdomain.com/webhook
 
 See `.env.example` for all available configuration options.
 
-Then clone the repository and deploy the bot:
+Then clone the repository and deploy the bot using:
 
 ```sh
+# pull repo to get docker-compose.yml and .env.example
 git clone https://github.com/mohdfareed/telegram-trader.git
 cd telegram-trader
-./scripts/deploy.sh
+
+# pull latest image and start container
+docker-compose pull
+docker-compose up -d
 ```
 
 ## Development
@@ -40,9 +44,8 @@ The following are available scripts for development and maintenance:
 
 ```sh
 ./scripts/setup.sh  # Setup development environment
-./scripts/run.sh    # Run bot in development mode
+./scripts/start.sh  # Run bot in development mode
 ./scripts/deploy.sh # Run bot in production mode
-./scripts/test.sh   # Run formatters and tests
 ./scripts/update.sh # Update project dependencies
 ```
 

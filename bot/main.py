@@ -6,8 +6,7 @@ from typing import Annotated
 
 import typer
 
-from bot.logging import setup_logging
-from bot import models
+from bot import models, utils
 
 from . import APP_NAME
 
@@ -15,7 +14,8 @@ from . import APP_NAME
 logger = logging.getLogger(__name__)
 app = typer.Typer(
     name=APP_NAME,
-    context_settings={"help_option_names": ["-h", "--help"]},
+    help="TelegramTrader bot command line interface.",
+    add_completion=False,
 )
 
 
@@ -23,18 +23,16 @@ app = typer.Typer(
 def main(
     debug_mode: Annotated[
         bool,
-        typer.Option(
-            "--debug", "-d", help="Enable debug mode."
-        ),
+        typer.Option("--debug", "-d", help="Enable debug mode."),
     ] = False,
 ) -> None:
     """Main entry point for the bot package."""
     app_settings = models.Settings()
-    setup_logging(debug_mode, app_settings.data_path / "bot.log")
+    utils.setup_logging(debug_mode, app_settings.data_path / "bot.log")
 
 
 @app.command()
 def start() -> None:
-    """Start the bots."""
+    """Start the Telegram bot."""
     print("running bot...")
     asyncio.run(asyncio.Event().wait())

@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Telegram trading bot"
 readme = "README.md"
 
-urls = { repository = "https://github.com/mohdfareed/discord-telegram-bot" }
+urls = { repository = "https://github.com/mohdfareed/telegram-trader-bot" }
 authors = [
     {name = "Mohammed Fareed", email = "mohdf.fareed@icloud.com"}
 ]
@@ -14,14 +14,12 @@ requires-python = ">=3.12"
 dependencies = [
     "pydantic",
     "pydantic-settings",
+    "sqlmodel",
     "typer",
     "python-telegram-bot",
-    "sqlmodel",
 ]
 
 [dependency-groups]
 dev = [
   "ruff",
-  "pytest",
-  "pytest-cov",
 ]
