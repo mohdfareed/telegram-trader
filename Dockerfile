@@ -2,11 +2,10 @@
 FROM python:3.13-slim
 
 # Set work directory
-WORKDIR /app
+WORKDIR /bot
 
-# Copy bot files
-COPY bot ./bot
-COPY scripts ./scripts
+# Copy app files
+COPY app ./app
 COPY pyproject.toml uv.lock* ./
 
 # Create virtual environment
@@ -16,7 +15,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN uv pip install --upgrade pip
 
 # Configure data volume
-VOLUME ["/app/data"]
+VOLUME ["/bot/data"]
 # Configure webhook port
 EXPOSE 8443
 
@@ -25,4 +24,4 @@ EXPOSE 8443
 #     CMD python -c "import requests; requests.get('http://localhost:8080/health', timeout=5)" || exit 1
 
 # Run the bot
-ENTRYPOINT ["uv", "run"]
+ENTRYPOINT ["uv", "run", "-m", "app", "start"]

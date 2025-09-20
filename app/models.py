@@ -1,3 +1,5 @@
+"""Bot models and settings."""
+
 __all__ = [
     "Settings",
     "DatabaseException",

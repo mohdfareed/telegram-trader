@@ -1,14 +1,13 @@
-"""Main entry point for the bot."""
+"""Bot main entry point."""
 
 import asyncio
 import logging
 from typing import Annotated
 
 import typer
+from rich import print
 
-from bot import models, utils
-
-from . import APP_NAME
+from app import APP_NAME, models, utils
 
 # setup bot
 logger = logging.getLogger(__name__)
@@ -34,5 +33,17 @@ def main(
 @app.command()
 def start() -> None:
     """Start the Telegram bot."""
-    print("running bot...")
-    asyncio.run(asyncio.Event().wait())
+    try:
+        logger.info("running bot...")
+        asyncio.run(asyncio.Event().wait())
+    except KeyboardInterrupt:
+        print()
+        logger.info("bot stopped.")
+
+
+@app.command()
+def settings() -> None:
+    """Display the app settings."""
+    app_settings = models.Settings()
+    logger.debug(f"app settings: {app_settings.model_dump_json(indent=2)}")
+    print(app_settings)

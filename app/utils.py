@@ -24,7 +24,7 @@ def setup_logging(debug: bool, log_file: Path) -> None:
 
     for module in WARN_MODULES:  # Reduce log level for non-debug modules
         logging.getLogger(module).setLevel(logging.WARNING)
-    root_logger.debug("Debug mode enabled.")
+    root_logger.debug("debug mode enabled.")
 
 
 def _console_handler(debug: bool) -> logging.Handler:
@@ -59,7 +59,7 @@ def _file_handler(log_file: Path) -> logging.Handler:
     file.setLevel(logging.NOTSET)
     file.setFormatter(
         logging.Formatter(
-            r"[%(asctime)s.%(msecs)03d] [%(levelname)-8s] %(message)s [%(name)s@%(filename)s:%(lineno)d]",
+            r"[%(asctime)s.%(msecs)03d] %(levelname)-8s %(message)s [%(name)s@%(filename)s:%(lineno)d]",
             datefmt=r"%Y-%m-%d %H:%M:%S",
         )
     )

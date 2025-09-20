@@ -5,4 +5,4 @@ set -e
 source ./.venv/bin/activate
 
 echo "updating project dependencies..."
-./.venv/bin/uv lock --upgrade
+uv lock --upgrade

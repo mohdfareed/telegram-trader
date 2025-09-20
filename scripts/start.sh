@@ -6,4 +6,4 @@ source ./.venv/bin/activate
 # shellcheck source=/dev/null
 source .env
 
-uv run -m bot start
+uv run -m app start
