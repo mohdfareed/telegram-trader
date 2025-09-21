@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     telegram_bot_token: str = ""
     database_url: str = f"sqlite:///{data_path / 'database.sql'}"
 
-    webhook_url: str = ""
+    webhook_url: str = "localhost"
     webhook_port: int = 8443
 
 

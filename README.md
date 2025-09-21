@@ -5,7 +5,6 @@ then posting them for subscribers to MetaTrader.
 
 ## Requirements
 
-- Python 3.13 or higher
 - [uv](https://docs.astral.sh/uv/) (Python package manager)
 - Docker and Docker Compose (containerized deployment)
 

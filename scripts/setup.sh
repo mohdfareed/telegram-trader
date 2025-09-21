@@ -1,6 +1,6 @@
 #!/bin/bash
 # Development Environment Setup Script
-set -e  # exit on any error
+set -euo pipefail
 
 PYTHON_VERSION="3.13"
 
@@ -16,10 +16,8 @@ echo "setting up venv with Python $PYTHON_VERSION..."
 uv python install $PYTHON_VERSION
 uv venv ./.venv --clear
 
-# shellcheck source=/dev/null
-source ./.venv/bin/activate
-
 # Install development dependencies
 echo "installing development dependencies..."
 uv pip install --upgrade pip
+uv lock --upgrade
 uv sync
