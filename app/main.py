@@ -63,30 +63,33 @@ def test_server() -> None:
     import socketserver
 
     class Handler(http.server.BaseHTTPRequestHandler):
-        def do_GET(self):
-            logger.info(f"GET {self.path} from {self.client_address[0]}")
+        def do_GET(self) -> None:
+            address = self.client_address[0]
+            logger.info(f"GET {self.path} from {address}")
+
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"OK")
 
-        def do_POST(self):
+        def do_POST(self) -> None:
+            address = self.client_address[0]
             body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
-            logger.info(
-                f"POST {self.path} from {self.client_address[0]}: {body.decode()}"
-            )
+            logger.info(f"POST {self.path} from {address}: {body.decode()}")
+
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(b"Received")
+            self.wfile.write(b"RECEIVED")
+
+        def log_message(self, format: str, *args: object) -> None:
+            return
 
     settings = models.Settings()
-    logger.info(
-        f"starting test server on: {settings.webhook_url}:{settings.webhook_port}"
-    )
+    webhook_url = f"{settings.webhook_url}:{settings.webhook_port}"
+    logger.info(f"starting test server on: {webhook_url}")
 
     try:
-        with socketserver.TCPServer(
-            (settings.webhook_url, settings.webhook_port), Handler
-        ) as httpd:
+        url = (settings.webhook_url, settings.webhook_port)
+        with socketserver.TCPServer(url, Handler) as httpd:
             httpd.serve_forever()
     except KeyboardInterrupt:
         print()

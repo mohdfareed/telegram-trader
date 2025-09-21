@@ -1,30 +1,38 @@
-#!/bin/bash
-set -e
-
-# shellcheck source=/dev/null
-source .env
-
-WEBHOOK_URL="http://localhost"
-WEBHOOK_PORT=12000
+#!/usr/bin/env sh
+# Test server connectivity
+set -euo pipefail
 
 # start the container
 echo "starting container with test server..."
 docker rm -f test-server > /dev/null 2>&1 || true
-docker compose -p test-server run -itd --build --name test-server telegram-trader app test-server
+docker compose -p test-server run -itd --build --service-ports \
+    --name test-server telegram-trader app test-server
+echo
 
 # wait for the server to start
-echo "testing connection..."
-sleep 10
+echo "waiting for server to start..."
+sleep 5
+
+# load connection settings
+# shellcheck source=/dev/null
+[ -f .env ] && . .env
+url="http://localhost:${WEBHOOK_PORT}/"
+echo "testing connection to url: $url"
 
 # test the connection
-if curl -s "http://${WEBHOOK_URL}:${WEBHOOK_PORT}/" && curl -s -X POST "http://${WEBHOOK_URL}:${WEBHOOK_PORT}/test" -d "hello-world"; then
-    echo "port test successful"
+if curl -s "$url" > /dev/null; then
+    echo "GET test successful"
 else
-    echo "port test failed"
+    echo "GET test failed"
 fi
+if curl -s -X POST "$url/test" -d "hello-world" > /dev/null; then
+    echo "POST test successful"
+else
+    echo "POST test failed"
+fi
+echo
 
 # cleanup
 echo "container logs:"
 docker logs test-server
-echo "cleaning up..."
-docker compose -p test-server down --remove-orphans
+docker rm -f test-server > /dev/null

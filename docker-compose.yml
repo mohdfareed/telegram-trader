@@ -13,7 +13,7 @@ services:
     volumes:
       - ./data:/bot/data
     ports:
-      - "${WEBHOOK_PORT:-8443}:8443"
+      - "${WEBHOOK_PORT}:${WEBHOOK_PORT}"
 
     # TODO: Implement a healthcheck
     # healthcheck:

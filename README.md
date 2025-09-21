@@ -10,27 +10,26 @@ then posting them for subscribers to MetaTrader.
 
 ## Deployment
 
-Define the following environment variables:
+The bot can be deployed using `docker-compose` and configured via `.env` file.
+Define the following environment variables in a `.env` file:
 
 ```sh
 # Get from @BotFather
 TELEGRAM_BOT_TOKEN=your_bot_token_here
 # User ID of admin who owns the bot
 ADMIN_USER_ID=123456789
-# Production webhook URL
+# Production webhook URL (optional)
 WEBHOOK_URL=https://yourdomain.com/webhook
+# Production webhook port (optional)
+WEBHOOK_PORT=8443
 ```
 
-See `.env.example` for all available configuration options.
-
-Then clone the repository and deploy the bot using:
+See `.env.example` for all available configuration options. Place the file
+in the same directory as `docker-compose.yml` (example provided in repo).
+Then run the following commands from the directory:
 
 ```sh
-# pull repo to get docker-compose.yml and .env.example
-git clone https://github.com/mohdfareed/telegram-trader.git
-cd telegram-trader
-
-# pull latest image and start container
+# Pull latest image and start container
 docker-compose pull
 docker-compose up -d
 ```
@@ -42,10 +41,10 @@ See `.env.example` for all available configuration options.
 The following are available scripts for development and maintenance:
 
 ```sh
-./scripts/setup.sh  # Setup development environment
-./scripts/start.sh  # Run bot in development mode
-./scripts/deploy.sh # Run bot in production mode
-./scripts/update.sh # Update project dependencies
+./scripts/app       # Bot app entry point
+./scripts/setup.sh  # Setup app environment
+./scripts/deploy.sh # Build and push Docker image
+./scripts/test.sh   # Test connection to Docker image locally
 ```
 
 ## Signal Detection
