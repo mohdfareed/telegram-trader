@@ -2,6 +2,7 @@
 
 __all__ = [
     "Settings",
+    "ApplicationException",
     "DatabaseException",
     "TelegramException",
 ]
@@ -31,9 +32,13 @@ class Settings(BaseSettings):
 # MARK: Exceptions ============================================================
 
 
-class DatabaseException(Exception):
+class ApplicationException(Exception):
+    """A general application exception."""
+
+
+class DatabaseException(ApplicationException):
     """An exception raised by the database."""
 
 
-class TelegramException(Exception):
+class TelegramException(ApplicationException):
     """An exception raised by the Telegram API."""

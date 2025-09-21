@@ -46,6 +46,7 @@ def main(
 def start() -> None:
     """Start the Telegram bot."""
     settings = models.Settings()
+    utils.track_bot(settings.data_path)
 
     try:
         logger.info("running bot...")
@@ -53,6 +54,19 @@ def start() -> None:
     except KeyboardInterrupt:
         print()
         logger.info("bot stopped")
+
+
+@app.command()
+def health() -> None:
+    """Health check command for container probes."""
+    settings = models.Settings()
+
+    if pid := utils.is_healthy(settings.data_path):
+        logger.info(f"bot is running with PID: {pid}")
+        raise typer.Exit(0)
+
+    logger.info("bot is not running")
+    raise typer.Exit(1)
 
 
 @app.command()

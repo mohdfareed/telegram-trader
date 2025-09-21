@@ -9,7 +9,7 @@ from typing import Generator, Optional
 from sqlalchemy.engine import Engine
 from sqlmodel import Session, SQLModel, create_engine
 
-from app import models as app_models
+from app import models
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +19,12 @@ _engine: Engine | None = None
 
 def init_db() -> None:
     """Initialize database engine and create tables."""
-    engine = _get_engine()
-    logger.debug("creating database tables...")
-    SQLModel.metadata.create_all(engine)
+    try:
+        engine = _get_engine()
+        logger.debug("creating database tables...")
+        SQLModel.metadata.create_all(engine)
+    except Exception as e:
+        raise models.DatabaseException("failed to initialize database") from e
 
 
 @contextmanager
@@ -45,12 +48,12 @@ def _get_engine(database_url: Optional[str] = None) -> Engine:
     if _engine is not None:
         return _engine
 
-    settings = app_models.Settings()
+    settings = models.Settings()
     url = database_url or settings.database_url
 
-    # sqlite needs check_same_thread=False to work across threads in some cases
-    connect_args = {"check_same_thread": False} if url.startswith("sqlite") else {}
-
-    _engine = create_engine(url, echo=settings.debug_mode, connect_args=connect_args)
-    logger.info(f"database engine created: {url}")
-    return _engine
+    try:
+        _engine = create_engine(url, echo=settings.debug_mode)
+        logger.info(f"database engine created: {url}")
+        return _engine
+    except Exception as e:
+        raise models.DatabaseException("failed to create database engine") from e

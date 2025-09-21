@@ -17,9 +17,9 @@ EXPOSE ${WEBHOOK_PORT}
 ENV PATH="/bot/scripts:$PATH"
 RUN setup.sh
 
-# TODO: Healthcheck
-# HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-#     CMD python -c "import requests; requests.get('http://localhost:8080/health', timeout=5)" || exit 1
+# Healthcheck
+HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=3 \
+    CMD app health || exit 1
 
 # Start the app
 CMD ["app", "start"]

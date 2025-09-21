@@ -2,7 +2,9 @@
 
 __all__ = ["setup_logging", "__app__", "__version__"]
 
+import atexit
 import logging
+import os
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
@@ -11,6 +13,10 @@ from rich.logging import RichHandler
 from rich.text import Text
 
 from app import __app__, __version__
+from app.models import ApplicationException
+
+HEALTH_FILE = Path("bot.pid")
+"""Health check file path."""
 
 WARN_MODULES = ["asyncio", "telegram", "telegram.ext", "httpcore", "httpx"]
 """Modules for which to log warnings and above."""
@@ -26,6 +32,26 @@ def setup_logging(debug: bool, log_file: Path) -> None:
 
     for module in WARN_MODULES:  # Reduce log level for non-debug modules
         logging.getLogger(module).setLevel(logging.WARNING)
+
+
+def track_bot(data_path: Path) -> None:
+    """Start tracking the health of the bot."""
+    health_file = data_path / HEALTH_FILE
+    health_file.parent.mkdir(parents=True, exist_ok=True)
+
+    # check if health file path exists
+    if health_file.exists():
+        raise ApplicationException(f"bot is already running: {health_file.read_text()}")
+
+    # create file and delete on exit
+    health_file.write_text(str(os.getpid()))
+    atexit.register(lambda: health_file.unlink(missing_ok=True))
+
+
+def is_healthy(data_path: Path) -> str | None:
+    """Check if the bot is healthy, return the PID if it is."""
+    health_file = data_path / HEALTH_FILE
+    return health_file.read_text() if health_file.exists() else None
 
 
 def _console_handler(debug: bool) -> logging.Handler:

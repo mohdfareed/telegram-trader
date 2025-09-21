@@ -14,11 +14,3 @@ services:
       - ./data:/bot/data
     ports:
       - "${WEBHOOK_PORT}:${WEBHOOK_PORT}"
-
-    # TODO: Implement a healthcheck
-    # healthcheck:
-    #   test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 10s
