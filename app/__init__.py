@@ -5,7 +5,7 @@ A Telegram bot for posting trading signals using MetaTrader.
 
 import subprocess
 
-__app__, __version__ = (
+APP_NAME, __version__ = (
     subprocess.run(["uv", "version"], capture_output=True, text=True, check=True)
     .stdout.strip()
     .split()

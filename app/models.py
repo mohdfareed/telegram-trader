@@ -10,7 +10,10 @@ __all__ = [
 from pathlib import Path
 
 import dotenv
+import typer
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from app import APP_NAME
 
 
 class Settings(BaseSettings):
@@ -18,7 +21,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=dotenv.find_dotenv(), extra="allow")
 
-    data_path: Path = Path(__file__).parent.parent / "data"
+    data_path: Path = Path(typer.get_app_dir(APP_NAME))
     debug_mode: bool = False
 
     telegram_bot_token: str = ""

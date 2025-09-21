@@ -21,7 +21,7 @@ class AppMeta(SQLModel, table=True):
     @staticmethod
     def load(session: Session) -> AppMeta:
         """Fetch or update the current AppMeta row."""
-        current = AppMeta(name=utils.__app__, version=utils.__version__)
+        current = AppMeta(name=utils.APP_NAME, version=utils.__version__)
         rows = session.exec(statement=select(AppMeta)).all()
         last = sorted(rows, key=lambda r: r.created_at)[-1] if rows else None
 

@@ -1,4 +1,4 @@
-from . import __app__
+from . import APP_NAME
 from .main import app
 
-app(prog_name=__app__)
+app(prog_name=APP_NAME)

@@ -1,6 +1,6 @@
 """Bot utilities."""
 
-__all__ = ["setup_logging", "__app__", "__version__"]
+__all__ = ["setup_logging", "APP_NAME", "__version__"]
 
 import atexit
 import logging
@@ -12,7 +12,7 @@ from pathlib import Path
 from rich.logging import RichHandler
 from rich.text import Text
 
-from app import __app__, __version__
+from app import APP_NAME, __version__
 from app.models import ApplicationException
 
 HEALTH_FILE = Path("bot.pid")
