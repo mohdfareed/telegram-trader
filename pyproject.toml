@@ -6,18 +6,19 @@ readme = "README.md"
 
 urls = { repository = "https://github.com/mohdfareed/telegram-trader" }
 authors = [
-    {name = "Mohammed Fareed", email = "mohdf.fareed@icloud.com"}
+  {name = "Mohammed Fareed", email = "mohdf.fareed@icloud.com"}
 ]
 
 requires-python = ">=3.13"
 
 dependencies = [
-    "pydantic",
-    "pydantic-settings",
-    "sqlmodel",
-    "typer",
-    "python-telegram-bot[webhooks,rate-limiter]",
-    "rich",
+  "pydantic",
+  "pydantic-settings",
+  "sqlmodel",
+  "typer",
+  "python-telegram-bot[webhooks,rate-limiter]",
+  "rich",
+  "fastapi[standard]",
 ]
 
 [dependency-groups]

@@ -12,8 +12,9 @@ COPY scripts/setup.sh ./scripts/setup.sh
 COPY pyproject.toml uv.lock* ./
 
 # Configure container
-VOLUME ["./data"]
+EXPOSE ${SERVER_PORT:-8081}
 EXPOSE ${WEBHOOK_PORT}
+VOLUME ["${DATA_PATH:-/bot/data}"]
 ENV PATH="/bot/scripts:$PATH"
 RUN setup.sh
 

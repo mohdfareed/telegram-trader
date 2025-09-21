@@ -42,7 +42,7 @@ def start(settings: models.Settings) -> None:
     # check if webhook is configured
     if settings.webhook_port > 0:
         url = f"https://{settings.webhook_base}/{settings.webhook_path}"
-        logger.info(f"starting webhook on: 0.0.0.0:{settings.webhook_port} -> {url}")
+        logger.info(f"bot listening on: 0.0.0.0:{settings.webhook_port} -> {url}")
 
         # run in production mode
         app.run_webhook(
@@ -55,7 +55,7 @@ def start(settings: models.Settings) -> None:
         )
 
     else:  # run in polling mode
-        logger.info("running in polling mode")
+        logger.info("bot running in polling mode")
         app.run_polling(drop_pending_updates=True)
     raise KeyboardInterrupt  # gracefully stop app
 
