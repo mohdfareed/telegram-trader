@@ -2,19 +2,23 @@
 # Development Environment Setup Script
 set -euo pipefail
 
-echo "updating project: $*"
+# bump version and update dependencies
+echo "updating project version: $*"
 uv version --bump "$@"
 echo "updating dependencies..."
 uv lock --upgrade
 
-while ! git diff --quiet; do
-    echo
-    echo "clean repo to tag new version"
-    read -r -p "press any key to continue..."
-done
-
+# commit changes
+echo "committing changes..."
+git add pyproject.toml uv.lock
 tag_name="$(uv version --short)"
-echo "updating repo to version: $tag_name"
-git tag -f -a "v$tag_name" -m "version $tag_name"
-git push origin "v$tag_name" --force
+git commit -m "chore(release): v${tag_name}"
+
+# tag and push changes
+echo "tagging repo: v${tag_name}"
+git tag -a "v${tag_name}" -m "version ${tag_name}"
+git push origin HEAD "v${tag_name}"
+
+# docker instructions
 echo "update complete"
+echo "run 'scripts/deploy.sh' to push docker image"
