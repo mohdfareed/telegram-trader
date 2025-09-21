@@ -18,8 +18,8 @@ Define the following environment variables in a `.env` file:
 TELEGRAM_BOT_TOKEN=your_bot_token_here
 # User ID of admin who owns the bot
 ADMIN_USER_ID=123456789
-# Production webhook URL (optional)
-WEBHOOK_URL=https://yourdomain.com/webhook
+# Production webhook base URL (optional)
+WEBHOOK_BASE=your-domain.com
 # Production webhook port (optional)
 WEBHOOK_PORT=8443
 ```
@@ -47,7 +47,31 @@ The following are available scripts for development and maintenance:
 ./scripts/test.sh   # Test connection to Docker image locally
 ```
 
-## Signal Detection
+For testing webhooks in development, Tailscale can be used to expose the local
+server to the internet. The webhook port can be exposed using:
+
+```sh
+tailscale funnel $WEBHOOK_PORT
+# > Available on the internet:
+# > https://$WEBHOOK_BASE/
+# > |-- proxy http://127.0.0.1:$WEBHOOK_PORT
+# > Press Ctrl+C to exit.
+```
+
+Also, VSCode can forward ports using GitHub authentication with the following setup:
+
+- **Port:** `$WEBHOOK_PORT`
+- **Forwarded Address:** `https://$WEBHOOK_BASE/`
+- **Visibility:** Must be set to "Public"
+
+## Bot Usage
+
+### Commands
+
+- `/start` - Welcome message and introduction
+- `/users` - List subscribed users
+
+### Signal Detection
 
 The bot detects trading signals by looking for:
 
@@ -62,38 +86,3 @@ BUY EURUSD @ 1.0850 SL: 1.0800 TP: 1.0900
 LONG BitcoinUSD Entry: 45000 SL: 44000 TP1: 46000 TP2: 47000
 SELL GBP/JPY 145.50 Stop Loss: 146.00 Take Profit: 144.50
 ```
-
-## Database
-
-The project uses SQLModel for persistence.
-
-- Engine URL comes from `Settings.database_url` (defaults to SQLite under `data/database.sql`).
-- Helpers in `app/database`:
-	- `get_engine()` creates/reuses the engine
-	- `init_db()` creates tables for all registered models
-	- `session_scope()` context manager handles commit/rollback
-
-Quick start:
-
-```python
-from app import models
-from app.database import init_db, session_scope
-
-settings = models.Settings()
-init_db()
-
-with session_scope() as session:
-		# session.add(...)
-		# session.exec(select(...))
-		pass
-```
-
-## Bot Commands
-
-### User Commands
-
-- `/start` - Welcome message and introduction
-
-### Admin Commands
-
-- `/users` - List subscribed users

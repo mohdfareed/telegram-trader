@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - "${DATA_PATH:-./data}:/bot/data"
+      - "${DATA_PATH:-./data}:${DATA_PATH:-/bot/data}"
     ports:
       - "${SERVER_PORT:-8081}:${SERVER_PORT:-8081}"
       - "${WEBHOOK_PORT}:${WEBHOOK_PORT}"

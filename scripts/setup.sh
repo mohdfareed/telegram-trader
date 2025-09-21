@@ -10,7 +10,7 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 # Create virtual environment
-echo "setting up venv with Python $PYTHON_VERSION..."
+echo "setting up virtual environment..."
 uv venv ./.venv --clear
 
 # Install development dependencies

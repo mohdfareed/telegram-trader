@@ -61,7 +61,7 @@ def _file_handler(level: int, log_file: Path) -> logging.Handler:
     file.setLevel(level)
     file.setFormatter(
         logging.Formatter(
-            r"[%(asctime)s.%(msecs)03d] %(levelname)-8s %(message)s [%(name)s@%(filename)s:%(lineno)d]",
+            r"[%(asctime)s.%(msecs)03d] %(levelname)-8s | %(message)s [%(name)s@%(filename)s:%(lineno)d]",
             datefmt=r"%Y-%m-%d %H:%M:%S",
         )
     )
