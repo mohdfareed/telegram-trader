@@ -10,7 +10,7 @@ from pathlib import Path
 from rich.logging import RichHandler
 from rich.text import Text
 
-WARN_MODULES = ["asyncio", "telegram", "httpcore", "httpx"]
+WARN_MODULES = ["asyncio", "telegram", "telegram.ext", "httpcore", "httpx"]
 """Modules for which to log warnings and above."""
 
 
@@ -51,7 +51,7 @@ def _file_handler(log_file: Path) -> logging.Handler:
         file.write(file_header + "\n")
 
     # create rotating file handler
-    file = RotatingFileHandler(log_file, maxBytes=2**10, backupCount=5, delay=True)
+    file = RotatingFileHandler(log_file, maxBytes=2**20, backupCount=5, delay=True)
 
     # configure file handler
     file.addFilter(_StripMarkupFilter())

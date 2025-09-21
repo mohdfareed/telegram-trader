@@ -16,7 +16,7 @@ dependencies = [
     "pydantic-settings",
     "sqlmodel",
     "typer",
-    "python-telegram-bot[webhooks]",
+    "python-telegram-bot[webhooks,rate-limiter]",
     "rich",
 ]
 

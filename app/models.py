@@ -23,8 +23,9 @@ class Settings(BaseSettings):
     telegram_bot_token: str = ""
     database_url: str = f"sqlite:///{data_path / 'database.sql'}"
 
-    webhook_url: str = ""
     webhook_port: int = 0
+    webhook_base: str = ""
+    webhook_path: str = ""
 
 
 # MARK: Exceptions ============================================================

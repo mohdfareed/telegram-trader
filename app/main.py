@@ -1,13 +1,14 @@
 """Bot main entry point."""
 
-import asyncio
+__all__ = ["app"]
+
 import logging
 from typing import Annotated
 
 import typer
 from rich import print
 
-from app import APP_NAME, models, utils
+from app import APP_NAME, bot, models, utils
 
 # setup bot
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ def main(
 ) -> None:
     """Main entry point for the bot package."""
     settings = models.Settings()
+    debug_mode = debug_mode or settings.debug_mode
     utils.setup_logging(debug_mode, settings.data_path / "bot.log")
 
     logger.debug("debug mode enabled")
@@ -37,12 +39,10 @@ def main(
 def start() -> None:
     """Start the Telegram bot."""
     settings = models.Settings()
-    settings = settings  # TODO: remove when bot is implemented
 
     try:
         logger.info("running bot...")
-        # TODO: implement and start bot
-        asyncio.run(asyncio.Event().wait())
+        bot.start(settings)
     except KeyboardInterrupt:
         print()
         logger.info("bot stopped")
@@ -84,11 +84,11 @@ def test_server() -> None:
             return
 
     settings = models.Settings()
-    webhook_url = f"{settings.webhook_url}:{settings.webhook_port}"
+    webhook_url = f"0.0.0.0:{settings.webhook_port}"
     logger.info(f"starting test server on: {webhook_url}")
 
     try:
-        url = (settings.webhook_url, settings.webhook_port)
+        url = ("0.0.0.0", settings.webhook_port)
         with socketserver.TCPServer(url, Handler) as httpd:
             httpd.serve_forever()
     except KeyboardInterrupt:
