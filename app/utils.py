@@ -1,6 +1,6 @@
 """Bot utilities."""
 
-__all__ = ["setup_logging"]
+__all__ = ["setup_logging", "__app__", "__version__"]
 
 import logging
 from datetime import datetime
@@ -9,6 +9,8 @@ from pathlib import Path
 
 from rich.logging import RichHandler
 from rich.text import Text
+
+from app import __app__, __version__
 
 WARN_MODULES = ["asyncio", "telegram", "telegram.ext", "httpcore", "httpx"]
 """Modules for which to log warnings and above."""

@@ -1,4 +1,4 @@
-"""Telegram bot startup and handlers."""
+"""Telegram bot startup."""
 
 import logging
 import secrets

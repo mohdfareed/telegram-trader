@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Telegram trading bot"
 readme = "README.md"
 
-urls = { repository = "https://github.com/mohdfareed/telegram-trader-bot" }
+urls = { repository = "https://github.com/mohdfareed/telegram-trader" }
 authors = [
     {name = "Mohammed Fareed", email = "mohdf.fareed@icloud.com"}
 ]

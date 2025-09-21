@@ -63,6 +63,31 @@ LONG BitcoinUSD Entry: 45000 SL: 44000 TP1: 46000 TP2: 47000
 SELL GBP/JPY 145.50 Stop Loss: 146.00 Take Profit: 144.50
 ```
 
+## Database
+
+The project uses SQLModel for persistence.
+
+- Engine URL comes from `Settings.database_url` (defaults to SQLite under `data/database.sql`).
+- Helpers in `app/database`:
+	- `get_engine()` creates/reuses the engine
+	- `init_db()` creates tables for all registered models
+	- `session_scope()` context manager handles commit/rollback
+
+Quick start:
+
+```python
+from app import models
+from app.database import init_db, session_scope
+
+settings = models.Settings()
+init_db()
+
+with session_scope() as session:
+		# session.add(...)
+		# session.exec(select(...))
+		pass
+```
+
 ## Bot Commands
 
 ### User Commands

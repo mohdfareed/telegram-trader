@@ -5,8 +5,7 @@ set -euo pipefail
 # start the container
 echo "starting container with test server..."
 docker rm -f test-server > /dev/null 2>&1 || true
-docker compose -p test-server run -itd --build --service-ports \
-    --name test-server telegram-trader app test-server
+docker compose run -itd --build --service-ports --name test-server bot app test-server
 echo
 
 # wait for the server to start

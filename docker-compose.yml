@@ -1,6 +1,6 @@
 services:
-  telegram-trader:
-    container_name: telegram-trader-bot
+  bot:
+    container_name: telegram-trader
     restart: unless-stopped
 
     image: ghcr.io/mohdfareed/telegram-trader:latest

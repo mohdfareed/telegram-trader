@@ -8,12 +8,14 @@ from typing import Annotated
 import typer
 from rich import print
 
-from app import APP_NAME, bot, models, utils
+from app import bot, models, utils
+from app.database import db_session, init_db
+from app.database.models import AppMeta
 
 # setup bot
 logger = logging.getLogger(__name__)
 app = typer.Typer(
-    name=APP_NAME,
+    name=utils.__app__,
     help="TelegramTrader bot command line interface.",
     add_completion=False,
 )
@@ -32,7 +34,12 @@ def main(
     utils.setup_logging(debug_mode, settings.data_path / "bot.log")
 
     logger.debug("debug mode enabled")
+    logger.debug(f"app version: {utils.__app__} {utils.__version__}")
     logger.debug(f"data path: {settings.data_path}")
+
+    init_db()
+    with db_session() as session:
+        AppMeta.load(session)
 
 
 @app.command()
@@ -52,8 +59,15 @@ def start() -> None:
 def settings() -> None:
     """Display the app settings."""
     app_settings = models.Settings()
-    logger.debug(f"app settings: {app_settings.model_dump_json(indent=2)}")
     print(app_settings)
+
+
+@app.command()
+def app_info() -> None:
+    """Display database AppMeta info."""
+    with db_session() as session:
+        meta = AppMeta.load(session)
+        print(meta)
 
 
 @app.command()

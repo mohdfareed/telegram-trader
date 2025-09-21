@@ -3,4 +3,10 @@
 A Telegram bot for posting trading signals using MetaTrader.
 """
 
-APP_NAME = "telegram-trader-bot"
+import subprocess
+
+__app__, __version__ = (
+    subprocess.run(["uv", "version"], capture_output=True, text=True, check=True)
+    .stdout.strip()
+    .split()
+)
